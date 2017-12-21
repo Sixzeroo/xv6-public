@@ -47,7 +47,7 @@ sys_sbrk(void)
 {
   int addr,newsz;
   int n;
-  struct *p;
+  struct proc *p;
 
   if(argint(0, &n) < 0)
     return -1;
