@@ -49,7 +49,8 @@ trap(struct trapframe *tf)
   // 出现page fault情况的处理
   if(tf->trapno == T_PGFLT)
   {
-	  uint a = PGROUNDDNOWN(rcr2());
+	  uint a = PGROUNDDOWN(rcr2());
+      struct proc* p = myproc();
 
 	  // allocate pyhsical memory , return address
 	  char *mem = kalloc();
@@ -58,15 +59,13 @@ trap(struct trapframe *tf)
 	  {
 		  cprintf("kalloc error : out of memory!\n");
 		  // 结束proces
-		  proc->killed = 1;
-		  break;
+		  p->killed = 1;
 	  }
 	  // 清空memory
 	  memset(mem,0,PGSIZE);
 	  // 创建一个与其相连的一个virtual memory 的PTEs
-	  cprintf("lazy allocate success!\n")
-	  mappages(proc->pgdir, (char*)a, PGSIZE, v2p(mem), PTE_W|PTE_U);
-	  break;
+	  cprintf("lazy allocate success!\n");
+	  mappages(p->pgdir, (char*)a, PGSIZE, V2P(mem), PTE_W|PTE_U);
   }
 
   switch(tf->trapno){
