@@ -98,20 +98,13 @@ sys_uptime(void)
   return xticks;
 }
 
-<<<<<<< HEAD
 int
-sys_cps (void)
-{
-	return cps();
-}
-=======
-int 
 sys_cps( void)
 {
 	return cps();
 }
 
-int 
+int
 sys_chpr(void)
 {
 	int pid,pr;
@@ -122,4 +115,3 @@ sys_chpr(void)
 
 	return chpr(pid,pr);
 }
->>>>>>> origin/div

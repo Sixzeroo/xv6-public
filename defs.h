@@ -120,13 +120,8 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            yield(void);
-<<<<<<< HEAD
-int			    cps(void);
-
-=======
 int             cps(void);
 int             chpr(int pid, int priority);
->>>>>>> origin/div
 // swtch.S
 void            swtch(struct context**, struct context*);
 

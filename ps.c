@@ -7,10 +7,5 @@ int
 main(int argc, char *argv[])
 {
 	cps();
-<<<<<<< HEAD
-	
-=======
-
->>>>>>> origin/div
 	exit();
 }
