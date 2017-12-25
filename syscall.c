@@ -104,10 +104,7 @@ extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_cps(void);
-<<<<<<< HEAD
-=======
 extern int sys_chpr(void);
->>>>>>> origin/div
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
