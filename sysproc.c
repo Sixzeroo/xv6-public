@@ -61,6 +61,7 @@ sys_sbrk(void)
   p->sz = newsz ;
 //  if(growproc(n) < 0)
 //    return -1;
+  cprintf("pid %d sbrk memory but not allocate physical memory\n",p->pid);
   return addr;
 }
 

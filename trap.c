@@ -58,7 +58,7 @@ trap(struct trapframe *tf)
     char *mem = kalloc();
     // 没有memory 可以分配的情况
     if(mem == 0)
-    {
+    { 
       cprintf("kalloc error : out of memory!\n");
       // 结束proces
       p->killed = 1;
@@ -66,7 +66,7 @@ trap(struct trapframe *tf)
     // 清空memory
     memset(mem,0,PGSIZE);
     // 创建一个与其相连的一个virtual memory 的PTEs
-    cprintf("lazy allocate success!\n");
+    cprintf("pid %d trap page fault, allocate memory to it \n",p->pid);
     mappages(p->pgdir, (char*)a, PGSIZE, V2P(mem), PTE_W|PTE_U);
     break;
   }
