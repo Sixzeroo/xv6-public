@@ -24,6 +24,10 @@ char* sbrk(int);
 int sleep(int);
 int uptime(void);
 int cps(void);
+<<<<<<< HEAD
+=======
+int chpr(int pid, int priority);
+>>>>>>> origin/div
 
 // ulib.c
 int stat(char*, struct stat*);

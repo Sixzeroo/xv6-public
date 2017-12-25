@@ -30,3 +30,7 @@ SYSCALL(sbrk)
 SYSCALL(sleep)
 SYSCALL(uptime)
 SYSCALL(cps)
+<<<<<<< HEAD
+=======
+SYSCALL(chpr)
+>>>>>>> origin/div

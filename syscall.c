@@ -104,6 +104,10 @@ extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_cps(void);
+<<<<<<< HEAD
+=======
+extern int sys_chpr(void);
+>>>>>>> origin/div
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -127,7 +131,12 @@ static int (*syscalls[])(void) = {
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
+<<<<<<< HEAD
 [SYS_cps]	  sys_cps,
+=======
+[SYS_cps]     sys_cps,
+[SYS_chpr]     sys_chpr,
+>>>>>>> origin/div
 };
 
 void
