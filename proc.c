@@ -88,7 +88,8 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
-  p->priority = 10; //default priority
+  p->priority = 5; //default priority
+	p->rrnum=0;
   release(&ptable.lock);
 
   // Allocate kernel stack.
@@ -319,11 +320,13 @@ wait(void)
 //  - swtch to start running that process
 //  - eventually that process transfers control
 //      via swtch back to the scheduler.
+
 void
 scheduler(void)
 {
   struct proc *p;
 	struct proc *p1;
+  //int i;
 
   struct cpu *c = mycpu();
   c->proc = 0;
@@ -351,6 +354,13 @@ scheduler(void)
 			p=highP;
 		  c->proc=p;
 			switchuvm(p);
+			p->rrnum++;
+			if((p->rrnum>=1000&&p->priority>14&&p->priority<20)||(p->rrnum>500&&p->priority>4&&p->priority<=14)){
+				p->rrnum=0;
+				p->priority++;
+			}
+			if(p->rrnum>1000)
+				p->rrnum=0;
 			p->state=RUNNING;
 			swtch(&(c->scheduler),p->context);
 			switchkvm();
@@ -358,7 +368,7 @@ scheduler(void)
       // Process is done running for now.
       // It should have changed its p->state before coming back.
       c->proc = 0;
-    }
+		}
     release(&ptable.lock);
 
   }
@@ -553,14 +563,14 @@ cps()
 
 	//loop over process table looking for process with pid
 	acquire(&ptable.lock);
-	cprintf("name \t pid \t state \t \t priority \n");
+	cprintf("name \t pid \t state \t \t priority rrnum \n");
 	for(p= ptable.proc; p < &ptable.proc[NPROC]; p++){
 		if(p->state == SLEEPING )
-			cprintf("%s \t %d \t SLEEPING \t %d\n ", p->name,p->pid,p->priority);
+			cprintf("%s \t %d \t SLEEPING \t %d \t %d\n ", p->name,p->pid,p->priority,p->rrnum);
 		else if(p->state == RUNNING)
-			cprintf("%s \t %d \t RUNNING \t %d\n ", p->name, p->pid,p->priority);
+			cprintf("%s \t %d \t RUNNING \t %d \t %d\n ", p->name, p->pid,p->priority,p->rrnum);
 		else if(p->state == RUNNABLE)
-			cprintf("%s \t %d \t RNNABLE \t %d\n ", p->name, p->pid,p->priority);
+			cprintf("%s \t %d \t RNNABLE \t %d \t %d\n ", p->name, p->pid,p->priority,p->rrnum);
 	}
 
 	release(&ptable.lock);
